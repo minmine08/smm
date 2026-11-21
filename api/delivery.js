@@ -1,4 +1,3 @@
-
 // Livraison dynamique SellAuth -> Bulk Medya (Vercel serverless function)
 //
 // URL à mettre dans SellAuth (une par produit / variant) :
@@ -64,8 +63,11 @@ function findLink(flat) {
     /link|url|profile|username|handle|page|post|video|channel/i.test(k) &&
     !/webhook|callback|product|image|avatar|store|shop|invoice/i.test(k) &&
     typeof v === 'string' && v.trim() !== '');
-  const http = entries.find(([, v]) => /^https?:\/\//i.test(v.trim()));
-  return (http || entries[0] || [null, null])[1]?.trim() || null;
+  // On préfère les champs remplis par le client (custom_fields) à tout autre champ qui ressemble à un lien
+  const fromCustom = entries.filter(([k]) => /custom_fields/i.test(k));
+  const pool = fromCustom.length ? fromCustom : entries;
+  const http = pool.find(([, v]) => /^https?:\/\//i.test(v.trim()));
+  return (http || pool[0] || [null, null])[1]?.trim() || null;
 }
 
 function findPurchasedQuantity(flat) {
@@ -75,6 +77,8 @@ function findPurchasedQuantity(flat) {
 }
 
 function findInvoice(flat) {
+  // SellAuth envoie un appel par article : on identifie la commande par l'ID de l'article (anti-doublon précis)
+  if (flat['item.id'] !== undefined && flat['item.id'] !== null) return `item${flat['item.id']}`;
   return findValue(flat, /(^|\.)invoice(_id|\.id|Id)?$/i) ||
          findValue(flat, /(^|\.)(invoice_id|order_id|orderId)$/i) ||
          (flat.id !== undefined ? String(flat.id) : null);
