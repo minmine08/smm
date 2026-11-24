@@ -26,7 +26,7 @@ const SERVICES = {
   fb_followers:      { id: 14931, name: 'Facebook Followers' },
   fb_likes:          { id: 7917,  name: 'Facebook Likes' },
   fb_comments:       { id: 16666, name: 'Facebook Comments', custom: true },
-  yt_followers:      { id: 15960, name: 'YouTube Subscribers' },
+  yt_followers:      { id: 6986, name: 'YouTube Subscribers' },
   yt_likes:          { id: 17676, name: 'YouTube Likes' },
   yt_comments:       { id: 6815,  name: 'YouTube Comments', custom: true },
   tw_followers:      { id: 5921,  name: 'Twitter Followers' },
