@@ -17,7 +17,7 @@
 const BM_URL = 'https://bulkmedya.org/api/v2';
 
 const SERVICES = {
-  ig_followers:      { id: 11935, name: 'Instagram Followers' },
+  ig_followers:      { id: 67, name: 'Instagram Followers' },
   ig_likes:          { id: 2010,  name: 'Instagram Likes' },
   ig_comments:       { id: 1166,  name: 'Instagram Comments' },
   tt_followers:      { id: 13170, name: 'TikTok Followers' },
